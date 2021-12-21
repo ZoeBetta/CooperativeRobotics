@@ -46,7 +46,11 @@ uvms.Jv_a= [zeros(3,7) zeros(3) uvms.wTv(1:3,1:3)];
 % vehicle horizontal attitude
 v_kv = [0 0 1]';
 w_kw = [0 0 1]';
-v_kw = uvms.vTw(1:3,1:3) * w_kw;
+v_kw = uvms.vTw(1:3,1:3) * w_kw
+uvms.v_rho_ha = ReducedVersorLemma(v_kw, v_kv);
+uvms.v_n_ha = uvms.v_rho_ha ./ norm(uvms.v_rho_ha);
+
+uvms.Jha = [zeros(1,7) zeros(1,3) uvms.v_n_ha'];
 
 % vehicle altitude
 v_d = [0; 0; uvms.sensorDistance]; 
