@@ -6,3 +6,4 @@ function [uvms] = ComputeActivationFunctions(uvms, mission)
 uvms.A.t = eye(6);
 uvms.A.v_l= eye(3);
 uvms.A.v_a=eye(3);
+uvms.A.ha = 1;
