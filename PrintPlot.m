@@ -34,8 +34,11 @@ figure(4);
 hplot = plot(plt.t, plt.a(8:9,:));
 set(hplot, 'LineWidth', 2);
 legend('Amu', 'Aha');
-    
 
+    figure(5);
+hplot = plot(plt.t, -plt.xdot_o);
+set(hplot, 'LineWidth', 2);
+legend('xdot.o');
 
     
 

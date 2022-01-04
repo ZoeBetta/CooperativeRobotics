@@ -9,8 +9,10 @@ function [plt] = InitDataPlot( maxloops)
     plt.xdot_jl = zeros(7, maxloops);
     plt.xdot_mu = zeros(1, maxloops);
     plt.xdot_t = zeros(6, maxloops);
+    plt.xdot_o = zeros(1, maxloops);
 
     plt.a = zeros(11, maxloops);
+    
 
 end
 

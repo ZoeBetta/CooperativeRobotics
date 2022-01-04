@@ -5,18 +5,34 @@ function [uvms] = ComputeActivationFunctions(uvms, mission)
             uvms.Ap.ha = 1;
             uvms.Ap.ma = 1;
             uvms.Ap.a = 0;
+            uvms.Ap.o=0;
+            uvms.Ap.t=zeros(6);
+            uvms.Ap.v_l= eye(3);
+            uvms.Ap.v_a=eye(3);
         case 2
             uvms.Ap.ha = 1;
             uvms.Ap.ma = 0;
             uvms.Ap.a = 1; %IncreasingBellShapedFunction(0, 1, 0, 1, mission.phase_time);
             uvms.Ap.o=1;
+            uvms.Ap.t=zeros(6);
+            uvms.Ap.v_l= zeros(3);
+            uvms.Ap.v_a=zeros(3);
+        case 3
+            uvms.Ap.ha = 1;
+            uvms.Ap.ma = 0;
+            uvms.Ap.a = 0;
+            uvms.Ap.o=0;
+            uvms.Ap.t=eye(6);
+            uvms.Ap.v_l= zeros(3);
+            uvms.Ap.v_a=zeros(3);
+            
     end
 % arm tool position control
-% always active
-uvms.A.t = eye(6);
+uvms.A.t = eye(6)*uvms.Ap.t;
 
-uvms.A.v_l= eye(3);
-uvms.A.v_a=eye(3);
+% vehicle position control
+uvms.A.v_l= eye(3)*uvms.Ap.v_l;
+uvms.A.v_a=eye(3)*uvms.Ap.v_a;
 
 
 %horizontal attitude

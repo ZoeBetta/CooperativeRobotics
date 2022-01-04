@@ -12,6 +12,15 @@ function [uvms, mission] = UpdateMissionPhase(uvms, mission)
 
             
         case 2
+            if (norm(uvms.v_rho_o)<0.1 && uvms.a<0.05)
+                mission.phase=3;
+                mission.phase_time=0;
+                disp(' *** change to phase 3 *** ');
+                
+            end
+            
+        case 3
+            
 
     end
 end

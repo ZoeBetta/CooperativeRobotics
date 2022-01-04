@@ -6,7 +6,7 @@ close all
 
 % Simulation variables (integration and final time)
 deltat = 0.005;
-end_time = 30;
+end_time = 45;
 loop = 1;
 maxloops = ceil(end_time/deltat);
 
@@ -51,45 +51,22 @@ uvms.q = [-0.0031 0 0.0128 -1.2460 0.0137 0.0853-pi/2 0.0137]';
 % RPY angles are applied in the following sequence
 % R(rot_x, rot_y, rot_z) = Rz (rot_z) * Ry(rot_y) * Rx(rot_x)
 
-%1.1 exercise
-%uvms.p = [8.5 38.5 -38   0 -0.06 0.5]'; 
-
-%Inizialitation for safety minimum altitude
-%uvms.p = [48.5 11.5 -33 0 0.06 -pi/2]'; 
-
-%Inizialitation for altitude
-%uvms.p = [10.5 37.5 -38 0 -0.06 0.5]';
-
 %Inizialitation for Landing
 uvms.p = [8.5 38.5 -36 0 -0.06 0.5]'; 
 
 % defines the goal position for the end-effector/tool position task
-uvms.goalPosition = [10.5   37.5  -38]';
-uvms.wRg = rotation(0, 0, 0);
+uvms.goalPosition = rock_center;
+uvms.wRg = rotation(0, pi, 0);
 uvms.wTg = [uvms.wRg uvms.goalPosition; 0 0 0 1];
 
 
 % defines the goal position for the vehicle position task
-%1.1
-%uvms.vehicleGoalPosition = [10.5 37.5 -38]';
-%uvms.wRggv = rotation(pi, 0,0);
-
-%Safety minimum
-%uvms.vehicleGoalPosition = [50   -12.5  -33]';
-%uvms.wRggv = rotation(0, 0, -pi/2);
-%uvms.wTggv = [uvms.wRggv uvms.vehicleGoalPosition; 0 0 0 1];
-
-%Landing
-%uvms.vehicleGoalPosition = [50   -12.5  10]';
-%uvms.wRggv = rotation(0, 0, -pi/2);
-%uvms.wTggv = [uvms.wRggv uvms.vehicleGoalPosition; 0 0 0 1];
  
 %Mission phase
 uvms.vehicleGoalPosition = [10.5   37.5  -38]';
 uvms.wRggv = rotation(0, -0.06, 0.5);
 uvms.wTggv = [uvms.wRggv uvms.vehicleGoalPosition; 0 0 0 1];
  
-
 % defines the tool control point
 uvms.eTt = eye(4);
 
@@ -114,15 +91,15 @@ for t = 0:deltat:end_time
     Qp = eye(13); 
     % add all the other tasks here!m
     % the sequence of iCAT_task calls defines the priority
-    [Qp, ydotbar] = iCAT_task(uvms.A.a,     uvms.Ja,   Qp, ydotbar, uvms.xdot.a,  0.0001,   0.01, 10);
     [Qp, ydotbar] = iCAT_task(uvms.A.ha,    uvms.Jha,  Qp, ydotbar, uvms.xdot.ha,  0.0001,   0.01, 10);
+    [Qp, ydotbar] = iCAT_task(uvms.A.a,     uvms.Ja,   Qp, ydotbar, uvms.xdot.a,  0.0001,   0.01, 10);
     [Qp, ydotbar] = iCAT_task(uvms.A.ma,    uvms.Jma,  Qp, ydotbar, uvms.xdot.ma,  0.0001,   0.01, 10);
     [Qp, ydotbar] = iCAT_task(uvms.A.o,    uvms.Jo,  Qp, ydotbar, uvms.xdot.o,  0.0001,   0.01, 10);
-    
+    [Qp, ydotbar] = iCAT_task(uvms.A.t,    uvms.Jt, Qp, ydotbar, uvms.xdot.t,  0.0001,   0.01, 10);
     [Qp, ydotbar] = iCAT_task(uvms.A.v_l,    uvms.Jv_l, Qp, ydotbar, uvms.xdot.v_l,  0.0001,   0.01, 10);
     [Qp, ydotbar] = iCAT_task(uvms.A.v_a,    uvms.Jv_a, Qp, ydotbar, uvms.xdot.v_a,  0.0001,   0.01, 10);
     
-    %m=mission.phase
+    m=mission.phase
     [Qp, ydotbar] = iCAT_task(eye(13),     eye(13),    Qp, ydotbar, zeros(13,1),  0.0001,   0.01, 10);    % this task should be the last one
     
     % get the two variables for integration

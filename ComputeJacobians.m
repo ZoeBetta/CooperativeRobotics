@@ -72,8 +72,8 @@ n = cross(w_iw, w_jw) ;
 n = n / norm(n) ;
 % project onto the plane the rock center and the vehicle center on world
 % frame
-Rock_proj = [12.2025   37.3748  -39.8860]' - dot([12.2025   37.3748  -39.8860]', n) * n
-v_proj=uvms.wTv(1:3,4)-dot(uvms.wTv(1:3,4), n) * n
+Rock_proj = [12.2025   37.3748  -39.8860]' - dot([12.2025   37.3748  -39.8860]', n) * n;
+v_proj=uvms.wTv(1:3,4)-dot(uvms.wTv(1:3,4), n) * n;
 % calculate the vector difference of the rock and vehicle and project it
 % onto the vehicle frame
 v_t=uvms.vTw(1:3,1:3) *(Rock_proj-v_proj);

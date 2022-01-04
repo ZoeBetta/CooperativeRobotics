@@ -19,13 +19,15 @@ uvms.xdot.v_a = Saturate(uvms.xdot.v_a, 0.5);
 
 % reference for the horizontal attitude task
 uvms.xdot.ha = 0.2 *(0 - norm(uvms.v_rho_ha));
-
+uvms.xdot.ha = Saturate(uvms.xdot.ha, 0.5);
 % reference for the minimum altitude task
 uvms.xdot.ma = 0.2 * (1 - uvms.a);
-
+uvms.xdot.ma = Saturate(uvms.xdot.ma, 0.5);
 
 % reference for the altitude task
 uvms.xdot.a = 0.2 * (0 - uvms.a);
+uvms.xdot.a = Saturate(uvms.xdot.a, 0.5);
 
 %reference for the orientation task
-uvms.xdot.o = 0.8 *(0 - norm(uvms.v_rho_o));
+uvms.xdot.o = 0.9 *(0 - norm(uvms.v_rho_o));
+uvms.xdot.o = Saturate(uvms.xdot.o, 0.5);
