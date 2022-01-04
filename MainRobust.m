@@ -114,8 +114,9 @@ for t = 0:deltat:end_time
     Qp = eye(13); 
     % add all the other tasks here!m
     % the sequence of iCAT_task calls defines the priority
-    [Qp, ydotbar] = iCAT_task(uvms.A.a,     uvms.Ja,   Qp, ydotbar, uvms.xdot.a,  0.0001,   0.01, 10);
+    
     [Qp, ydotbar] = iCAT_task(uvms.A.ha,    uvms.Jha,  Qp, ydotbar, uvms.xdot.ha,  0.0001,   0.01, 10);
+    [Qp, ydotbar] = iCAT_task(uvms.A.a,     uvms.Ja,   Qp, ydotbar, uvms.xdot.a,  0.0001,   0.01, 10);
     [Qp, ydotbar] = iCAT_task(uvms.A.ma,    uvms.Jma,  Qp, ydotbar, uvms.xdot.ma,  0.0001,   0.01, 10);
     [Qp, ydotbar] = iCAT_task(uvms.A.v_l,    uvms.Jv_l, Qp, ydotbar, uvms.xdot.v_l,  0.0001,   0.01, 10);
     [Qp, ydotbar] = iCAT_task(uvms.A.v_a,    uvms.Jv_a, Qp, ydotbar, uvms.xdot.v_a,  0.0001,   0.01, 10);
