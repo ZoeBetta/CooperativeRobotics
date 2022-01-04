@@ -33,11 +33,9 @@ legend('Ajl_11','Ajl_22','Ajl_33','Ajl_44','Ajl_55','Ajl_66','Ajl_77');
 figure(4);
 hplot = plot(plt.t, plt.a(8:9,:));
 set(hplot, 'LineWidth', 2);
-legend('Amu', 'Aha');
+legend('A.ma', 'xdot.ma');
     
-
-
-    
+  
 
 end
 

@@ -23,7 +23,7 @@ plt.xdot_t(:, loop) =  blkdiag(uvms.wTv(1:3,1:3), uvms.wTv(1:3,1:3))*uvms.xdot.t
 
 plt.a(1:7, loop) = diag(uvms.A.jl);
 plt.a(8, loop) = uvms.A.ma;
-plt.a(9, loop) = uvms.A.ha(1,1);
+plt.a(9, loop) = uvms.xdot.ma;
 
 plt.toolx(:,loop) = uvms.wTt(1,4);
 plt.tooly(:,loop) = uvms.wTt(2,4);
