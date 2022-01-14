@@ -100,8 +100,8 @@ for t = 0:deltat:end_time
     
     rhop = zeros(13,1);
     Qp = eye(13); 
-    [Qp, rhop] = iCAT_task(uvms.A.jl,    uvms.Jjl, Qp, rhop, uvms.xdot.jl,  0.0001,   0.01, 10);
     [Qp, rhop] = iCAT_task(uvms.A.vcv,    uvms.Jvcv, Qp, rhop, uvms.xdot.vcv,  0.0001,   0.01, 10);
+    [Qp, rhop] = iCAT_task(uvms.A.jl,    uvms.Jjl, Qp, rhop, uvms.xdot.jl,  0.0001,   0.01, 10);
     [Qp, rhop] = iCAT_task(uvms.A.t,    uvms.Jt, Qp, rhop, uvms.xdot.t,  0.0001,   0.01, 10);
     %[Qp, rhop] = iCAT_task(uvms.A.prefe_value,    uvms.Jprefe_value, Qp, rhop, uvms.xdot.prefe_value,  0.0001,   0.01, 10);
     %[Qp, rhop] = iCAT_task(uvms.A.ha,    uvms.Jha,  Qp, rhop, uvms.xdot.ha,  0.0001,   0.01, 10);
@@ -117,7 +117,7 @@ for t = 0:deltat:end_time
     uvms.p_dot = vehicle_ref_velocity;
     
     %disturbances
-    uvms.p_dot = uvms.p_dot + 0.03*sin(10*t);
+    uvms.p_dot = uvms.p_dot + 0.5*sin(t);
     
     % Integration
 	uvms.q = uvms.q + uvms.q_dot*deltat;

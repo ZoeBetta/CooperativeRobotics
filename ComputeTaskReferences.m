@@ -5,8 +5,8 @@ function [uvms] = ComputeTaskReferences(uvms, mission)
 [ang, lin] = CartError(uvms.vTg , uvms.vTt);
 uvms.xdot.t = 1.5 * [ang; lin];
 % limit the requested velocities...
-uvms.xdot.t(1:3) = Saturate(uvms.xdot.t(1:3), 2);
-uvms.xdot.t(4:6) = Saturate(uvms.xdot.t(4:6), 2);
+uvms.xdot.t(1:3) = Saturate(uvms.xdot.t(1:3), 1.5);
+uvms.xdot.t(4:6) = Saturate(uvms.xdot.t(4:6), 1.5);
 
 % reference for vehicle position control task - projected on the world
 % frame
@@ -17,7 +17,8 @@ uvms.xdot.v_l = Saturate(uvms.xdot.v_l, 0.8);
 uvms.xdot.v_a = Saturate(uvms.xdot.v_a, 0.8);
 
 % reference for the vehicle constrained velocity task
-uvms.xdot.vcv = zeros(6,1);
+uvms.xdot.vcv = uvms.p_dot;
+%uvms.xdot.vcv = zeros(6,1);
 
 %joint limits task
 
